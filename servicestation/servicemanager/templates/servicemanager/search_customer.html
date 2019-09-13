@@ -1,0 +1,48 @@
+{% extends "servicemanager/base.html" %}
+{% block title %}<title>Service Station</title>{% endblock %}
+{% block content %}
+
+<div class="wrapper">
+    <div style="max-width: 700px; margin: 0 auto;">My Service Station</div>
+</div>
+
+<div class="wrapper">
+    <form action="{% url 'manager:search_customer' %}" method="get" class="manage-customer-form">
+        <div class="form-title">
+            <strong>{% if card_title %}{{ card_title }}{% else %}Search customers{% endif %}</strong>
+        </div>
+        <div class="mul-fields">
+            {{ form.first_name }}
+            {% if form.first_name.errors %}<div>{{ form.first_name.errors }}</div>{% endif %}
+
+            {{ form.last_name }}
+            {% if form.last_name.errors %}<div>{{ form.last_name.errors }}</div>{% endif %}
+        </div>
+        <div class="single-field">
+            <input type="submit" value="Search" class="my-btn my-btn-save">
+        </div>
+    </form>
+
+    {% if msg %}<div class="manage-customer-form">
+
+        <div class="form-header-title">
+            <strong>{{ msg }}</strong>
+        </div>
+
+
+        {% for obj in customer_list %}
+        <div><!-- class="mul-fields"-->
+            <a href="{% url 'manager:customer_card' obj.pk %}">
+                {{ obj.first_name }} {{ obj.last_name }} {{ obj.email }}
+            </a>
+        </div>
+        {% endfor %}
+
+
+    </div>{% endif %}
+
+
+</div>
+
+
+{% endblock %}

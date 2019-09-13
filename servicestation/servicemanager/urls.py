@@ -5,12 +5,18 @@ from .views import (
     CustomerDetailView,
     CustomerUpdateView,
     CustomerDeleteView,
+    MainView,
+    CustomerListView,
 )
 
 
 app_name = 'manager'
 
 urlpatterns = [
+    path('', MainView.as_view(), name='main'),
+    path('search/', CustomerListView.as_view(), name='search_customer'),
+    # path('found/', CustomerListView.as_view(), name='found_customer'),
+
     path('create_customer/', CustomerCreateView.as_view(), name='create_customer'),
     path('update_customer/<int:pk>/', CustomerUpdateView.as_view(), name='update_customer'),
     path('customer_card/<int:pk>/', CustomerDetailView.as_view(), name='customer_card'),

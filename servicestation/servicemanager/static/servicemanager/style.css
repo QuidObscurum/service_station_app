@@ -9,8 +9,8 @@ html { height: 100%; } /* necessary for percentage heights to work */
 body {
     min-height: 100%; /* allow body to expand with children */
     display: flex; /* establish flex container */
-    justify-content: center; /* center div horizontally, in this case */
-    align-items: center; /* center div vertically, in this case */
+    /*justify-content: center;  center div vertically, in this case */
+    align-items: center;  /* center div horizontally, in this case */
     flex-direction: column;
 }
 
@@ -19,7 +19,7 @@ body {
     top: 50%;
     transform: translateY(-50%);*/
     width: 100%;
-    padding: 0 15px;
+    padding: 15px;
 }
 
 .manage-customer-form {
@@ -329,7 +329,8 @@ button:disabled {
         flex-direction: column;
     }
 
-    .input {
+    .input,
+    .form-header-title {
         width: 96%;
     }
 
@@ -354,6 +355,10 @@ button:disabled {
         width: 50%;
     }
 
+    .my-btn-save {
+        width: 50%;
+    }
+
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -365,16 +370,26 @@ button:disabled {
     .modal-btn-delete{
         width: 40%;
     }
+
+    .my-btn-save {
+        width: 40%;
+    }
+
+    .form-header-title{
+        width: 96%;
+    }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
-    .modal-btn-cancel{
+    .modal-btn-cancel,
+    .modal-btn-delete,
+    .my-btn-save {
         width: 30%;
     }
 
-    .modal-btn-delete{
-        width: 30%;
+    .form-header-title{
+        width: 46%;
     }
 }
 
@@ -386,6 +401,16 @@ button:disabled {
 
     .modal-btn-delete{
         width: 23%;
+    }
+
+    .my-btn-save {
+        width: 23%;
+    }
+}
+
+@media only screen and (min-width: 1998px) {
+    .manage-customer-form {
+        max-width: 1000px;
     }
 }
 

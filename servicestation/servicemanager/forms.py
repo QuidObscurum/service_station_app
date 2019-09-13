@@ -2,6 +2,20 @@ from django import forms
 from .models import Customer
 
 
+class SearchForm(forms.ModelForm):
+    class Meta:
+        model = Customer
+        fields = ['first_name', 'last_name']
+        widgets = {
+            'first_name': forms.TextInput(attrs={
+                'placeholder': "First Name", "class": "input",
+            }),
+            'last_name': forms.TextInput(attrs={
+                'placeholder': "Last Name", "class": "input",
+            }),
+        }
+
+
 class CustomerForm(forms.ModelForm):
     address = forms.CharField(
         required=False,
