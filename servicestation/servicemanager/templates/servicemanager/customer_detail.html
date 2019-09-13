@@ -1,0 +1,98 @@
+{% extends "servicemanager/base.html" %}
+{% block title %}<title>Customer Card</title>{% endblock %}
+{% block content %}
+<div class="wrapper">
+    <div class="manage-customer-form">
+        <div class="form-title"><strong>Customer card</strong></div>
+
+        <div class="form-header">
+            <div class="form-header-title"><strong>Personal data</strong></div>
+            <div class="my-btn-group">
+                <a href="{% url 'manager:update_customer' customer.pk %}" class="my-btn my-btn-edit">Edit</a>
+                {% if can_delete %}
+                <!--<a href="{% url 'manager:update_customer' customer.pk %}"
+                    class="my-btn my-btn-delete" id="delCustomerLink">data-toggle="modal" data-target="#confirmModal"
+                    Delete
+                </a>-->
+                <button class="my-btn my-btn-delete" id="delCustomerLink">Delete</button>
+                {% else %}<!--<a class="my-btn my-btn-disabled">Delete</a>-->
+                <button class="my-btn my-btn-disabled" disabled>Delete</button>
+                {% endif %}
+            </div>
+        </div>
+        <div class="form-card">
+            <div class="mul-fields">
+                <div class="input">
+                    <span class="card-label">Name:</span> {{ object.first_name }} {{ object.last_name }}
+                </div>
+                <div class="input">
+                    <span class="card-label">Date of birth:</span> {{ object.birth_date }}
+                </div>
+            </div>
+
+            <div class="mul-fields">
+                <div class="input">
+                    <span class="card-label">Phone number:</span> +{{ object.phone }}
+                </div>
+                <div class="input">
+                    <span class="card-label">E-mail:</span> {{ object.email }}
+                </div>
+            </div>
+
+            <div class="input">
+                <div style="padding-bottom: 10px;">
+                    <span class="card-label">Address:</span>
+                </div>
+                <div>{{ object.house }}, {{ object.street }}<br>
+                {{ object.city }}, {{ object.state }}<br>
+                {{ object.country }}, {{ object.postal_code }}</div>
+            </div>
+        </div>
+
+        <div class="form-header">
+            <div class="form-header-title"><strong>Cars</strong></div>
+            <div class="my-btn-group">
+                <a href="{% url 'manager:update_customer' customer.pk %}" class="my-btn my-btn-edit">Edit</a>
+                {% if can_delete %}<a href="{% url 'manager:update_customer' customer.pk %}"
+                                      class="my-btn my-btn-delete">Delete</a>
+                {% else %}<a class="my-btn my-btn-disabled">Delete</a>
+                {% endif %}{{ can_delete }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div id="confirmModal" class="my-modal">
+
+  <!-- Modal content -->
+    <div class="my-modal-content">
+        <span class="close">&times;</span><!--<span aria-hidden="true">×</span>-->
+    <!--CHECK 48% ON MOBILE-->
+        <div><b>Confirm deletion</b></div>
+
+        <form action="{% url 'manager:update_customer' customer.pk %}"
+              method="post" class="delete-customer-form"> {% csrf_token %}
+
+            <div class="modal-msg">Are you sure you want to delete the customer? <br>
+                All data on related cars and orders will be deleted as well.</div>
+            <div class="modal-btn-group">
+                <button class="my-btn modal-btn-cancel">Cancel</button>
+<!--                <a href="{% url 'manager:update_customer' customer.pk %}"-->
+<!--                  class="my-btn modal-btn-delete">Delete</a>-->
+                <input type="submit" value="Delete" class="my-btn modal-btn-delete">
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<!--<div>-->
+<!--    {% for field, value in data.items %}-->
+<!--    <div>-->
+<!--        {{ field }}: {{ value }}-->
+<!--    </div>-->
+<!--    {% endfor %}-->
+<!--</div>-->
+
+{% endblock %}
