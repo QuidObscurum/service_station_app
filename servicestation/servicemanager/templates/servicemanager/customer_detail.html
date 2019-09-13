@@ -68,19 +68,18 @@
   <!-- Modal content -->
     <div class="my-modal-content">
         <span class="close">&times;</span><!--<span aria-hidden="true">×</span>-->
-    <!--CHECK 48% ON MOBILE-->
         <div><b>Confirm deletion</b></div>
 
-        <form action="{% url 'manager:update_customer' customer.pk %}"
+        <form action="{% url 'manager:delete_customer' customer.pk %}"
               method="post" class="delete-customer-form"> {% csrf_token %}
 
             <div class="modal-msg">Are you sure you want to delete the customer? <br>
                 All data on related cars and orders will be deleted as well.</div>
             <div class="modal-btn-group">
-                <button class="my-btn modal-btn-cancel">Cancel</button>
+                <span class="my-btn modal-btn-cancel">Cancel</span>
 <!--                <a href="{% url 'manager:update_customer' customer.pk %}"-->
 <!--                  class="my-btn modal-btn-delete">Delete</a>-->
-                <input type="submit" value="Delete" class="my-btn modal-btn-delete">
+                <input name="delete" type="submit" value="Delete" class="my-btn modal-btn-delete">
             </div>
         </form>
     </div>

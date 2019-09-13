@@ -148,7 +148,7 @@ input:focus:-ms-input-placeholder {
 
 .modal-btn-cancel {
     margin: 0 2% 0 0;
-    width: 30%;
+    width: 23%;
     background: #343a40;
     color: #f8f9fa;
 }
@@ -198,7 +198,7 @@ input:focus:-ms-input-placeholder {
 }
 
 .modal-btn-delete {
-    width: 30%;
+    width: 23%;
     color: #f8f9fa;
     background-color: #dc3545;
     text-decoration: none;
@@ -296,7 +296,7 @@ button:disabled {
   width: 50%;
 }
 
-.modal-content {
+/*.modal-content {
     position: relative;
     background-color: #fff;
     background-clip: padding-box;
@@ -306,7 +306,7 @@ button:disabled {
     -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
     box-shadow: 0 3px 9px rgba(0,0,0,.5);
     outline: 0;
-}
+}*/
 
 /* The Close Button */
 .close {
@@ -346,4 +346,49 @@ button:disabled {
         width: 80%;
     }
 
+    .modal-btn-cancel{
+        width: 50%;
+    }
+
+    .modal-btn-delete{
+        width: 50%;
+    }
+
 }
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .modal-btn-cancel{
+        width: 40%;
+    }
+
+    .modal-btn-delete{
+        width: 40%;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .modal-btn-cancel{
+        width: 30%;
+    }
+
+    .modal-btn-delete{
+        width: 30%;
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .modal-btn-cancel{
+        width: 23%;
+    }
+
+    .modal-btn-delete{
+        width: 23%;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+/*@media only screen and (min-width: 1200px) {...}*/
+

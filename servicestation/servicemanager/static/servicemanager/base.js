@@ -1,9 +1,8 @@
 var delBtn = document.getElementById("delCustomerLink");
-console.log(delBtn);
 var modal = document.getElementById("confirmModal");
 var closeSpan = document.getElementsByClassName("close")[0];
 
-var cancel = document.getElementsByClassName("my-btn-cancel")[0];
+var cancel = document.getElementsByClassName("modal-btn-cancel")[0];
 
 delBtn.onclick = function() {
   modal.style.display = "block";

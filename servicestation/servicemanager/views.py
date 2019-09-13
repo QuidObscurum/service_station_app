@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
+# from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.conf import settings
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 
 from .models import Customer
@@ -58,6 +59,9 @@ class CustomerDetailView(DetailView):
         return context
 
 
-def customer_delete_view(request):
-    if request.method == "POST":
-        pass
+class CustomerDeleteView(DeleteView):
+    model = Customer
+
+    def get_success_url(self):
+        return reverse("manager:create_customer")
+
