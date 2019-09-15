@@ -1,5 +1,5 @@
 from django import forms
-from .models import Customer
+from .models import Customer, Vehicle
 
 
 class SearchForm(forms.ModelForm):
@@ -67,4 +67,28 @@ class CustomerForm(forms.ModelForm):
             'postal_code': forms.TextInput(attrs={
                 'id': 'postal_code', 'disabled': 'true', 'placeholder': "Postal Code", "class": "input disabled",
             }),
+        }
+
+
+class VehicleForm(forms.ModelForm):
+    class Meta:
+        context_object_name = 'car_form'
+        model = Vehicle
+        fields = ['owner', 'make', 'model', 'year', 'vin']
+        widgets = {
+            'owner': forms.HiddenInput(attrs={
+                "class": "input",
+            }),
+            'make': forms.TextInput(attrs={
+                'placeholder': "Make", "class": "input",
+            }),
+            'model': forms.TextInput(attrs={
+                'placeholder': "Model", "class": "input",
+            }),
+            'year': forms.TextInput(attrs={
+                'placeholder': "Year", "class": "input",
+            }),
+            'vin': forms.TextInput(attrs={
+                'placeholder': "VIN", "class": "input",
+            })
         }

@@ -31,7 +31,7 @@
 
 
         {% for obj in customer_list %}
-        <div><!-- class="mul-fields"-->
+        <div class="form-header-title"><!-- class="mul-fields"-->
             <a href="{% url 'manager:customer_card' obj.pk %}">
                 {{ obj.first_name }} {{ obj.last_name }} {{ obj.email }}
             </a>

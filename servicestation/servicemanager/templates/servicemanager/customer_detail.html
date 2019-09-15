@@ -10,55 +10,62 @@
             <div class="my-btn-group">
                 <a href="{% url 'manager:update_customer' customer.pk %}" class="my-btn my-btn-edit">Edit</a>
                 {% if can_delete %}
-                <!--<a href="{% url 'manager:update_customer' customer.pk %}"
-                    class="my-btn my-btn-delete" id="delCustomerLink">data-toggle="modal" data-target="#confirmModal"
-                    Delete
-                </a>-->
                 <button class="my-btn my-btn-delete" id="delCustomerLink">Delete</button>
-                {% else %}<!--<a class="my-btn my-btn-disabled">Delete</a>-->
+                {% else %}
                 <button class="my-btn my-btn-disabled" disabled>Delete</button>
                 {% endif %}
             </div>
         </div>
         <div class="form-card">
             <div class="mul-fields">
-                <div class="input">
-                    <span class="card-label">Name:</span> {{ object.first_name }} {{ object.last_name }}
+                <div class="output">
+                    <span class="card-label">Name:</span> {{ customer.first_name }} {{ customer.last_name }}
                 </div>
-                <div class="input">
-                    <span class="card-label">Date of birth:</span> {{ object.birth_date }}
+                <div class="output">
+                    <span class="card-label">Date of birth:</span> {{ customer.birth_date }}
                 </div>
             </div>
 
             <div class="mul-fields">
-                <div class="input">
-                    <span class="card-label">Phone number:</span> +{{ object.phone }}
+                <div class="output">
+                    <span class="card-label">Phone number:</span> +{{ customer.phone }}
                 </div>
-                <div class="input">
-                    <span class="card-label">E-mail:</span> {{ object.email }}
+                <div class="output">
+                    <span class="card-label">E-mail:</span> {{ customer.email }}
                 </div>
             </div>
 
-            <div class="input">
+            <div class="output">
                 <div style="padding-bottom: 10px;">
                     <span class="card-label">Address:</span>
                 </div>
-                <div>{{ object.house }}, {{ object.street }}<br>
-                {{ object.city }}, {{ object.state }}<br>
-                {{ object.country }}, {{ object.postal_code }}</div>
+                <div>{{ customer.house }}, {{ customer.street }}<br>
+                {{ customer.city }}, {{ customer.state }}<br>
+                {{ customer.country }}, {{ customer.postal_code }}</div>
             </div>
         </div>
 
         <div class="form-header">
-            <div class="form-header-title"><strong>Cars</strong></div>
-            <div class="my-btn-group">
-                <a href="{% url 'manager:update_customer' customer.pk %}" class="my-btn my-btn-edit">Edit</a>
-                {% if can_delete %}<a href="{% url 'manager:update_customer' customer.pk %}"
-                                      class="my-btn my-btn-delete">Delete</a>
-                {% else %}<a class="my-btn my-btn-disabled">Delete</a>
-                {% endif %}{{ can_delete }}
-            </div>
+            <div class="form-header-title"><strong>Cars ({{ vehicles|length }})</strong></div>
         </div>
+
+        <form action="{% url 'manager:create_vehicle' customer.pk %}" method="post" class="form-card">
+            {% csrf_token %}
+            <div class="mul-fields">
+                <input type="hidden" name="owner" required class="input" value="{{ customer.id }}">
+                <input type="text" name="make" required class="input" placeholder="Make">
+                <input type="text" name="model" required class="input" placeholder="Model">
+            </div>
+            <div class="mul-fields">
+                <input type="text" name="year" required class="input" placeholder="Year">
+                <input type="text" name="vin" required class="input" placeholder="VIN">
+            </div>
+            <div class="single-field">
+                <input type="submit" value="Add" class="my-btn my-btn-save">
+            </div>
+        </form>
+
+
     </div>
 </div>
 
@@ -85,13 +92,5 @@
     </div>
 
 </div>
-
-<!--<div>-->
-<!--    {% for field, value in data.items %}-->
-<!--    <div>-->
-<!--        {{ field }}: {{ value }}-->
-<!--    </div>-->
-<!--    {% endfor %}-->
-<!--</div>-->
 
 {% endblock %}

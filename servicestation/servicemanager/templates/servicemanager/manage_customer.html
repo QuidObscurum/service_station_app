@@ -3,7 +3,6 @@
 {% block content %}
 
 <div class="wrapper">
-<!--    <div class="manage-customer-form">-->
     <form action="" method="post" class="manage-customer-form"> {% csrf_token %}
         <div class="form-title">
             <strong>{% if card_title %}{{ card_title }}{% else %}Customer card{% endif %}</strong>
@@ -53,85 +52,11 @@
             {{ form.house }}
             {% if form.house.errors %}<div>{{ form.house.errors }}</div>{% endif %}
         </div>
-<!--    </div>-->
         <div class="single-field">
             <input type="submit" value="Save" class="my-btn my-btn-save">
         </div>
     </form>
 </div>
-
-
-
-
-<!--<form action="" method="post"> {% csrf_token %}-->
-
-<!--{{ form.non_field_errors }}-->
-<!--    <table style="max-width: 100%;">-->
-<!--        <tbody>-->
-<!--            <tr class="fieldWrapper row d-flex flex-column flex-md-row">-->
-<!--                <th class="col-12 col-md-5"><label for="{{ form.name.id_for_label }}">{{ form.first_name.label }}:</label></th>-->
-<!--                <td class="col-12 col-md-7">{{ form.first_name }}</td>-->
-<!--                {% if form.first_name.errors %}<td>{{ form.first_name.errors }}</td>{% endif %}-->
-<!--            </tr>-->
-<!--            <tr class="fieldWrapper row d-flex flex-column flex-md-row">-->
-<!--                <th class="col-12 col-md-5"><label for="{{ form.surname.id_for_label }}">{{ form.last_name.label }}:</label></th>-->
-<!--                <td class="col-12 col-md-7">{{ form.last_name }}</td>-->
-<!--                {% if form.last_name.errors %}<td>{{ form.last_name.errors }}</td>{% endif %}-->
-<!--            </tr>-->
-<!--            <tr class="fieldWrapper row d-flex flex-column flex-md-row">-->
-<!--                <th class="col-12 col-md-5"><label for="{{ form.birth_date.id_for_label }}">{{ form.birth_date.label }}:</label></th>-->
-<!--                <td class="col-12 col-md-7">{{ form.birth_date }}</td>-->
-<!--                {% if form.birth_date.errors %}<td class="col-12">{{ form.birth_date.errors }}</td>{% endif %}-->
-<!--            </tr>-->
-<!--            <tr class="fieldWrapper row d-flex flex-column flex-md-row">-->
-<!--                <th class="col-12 col-md-5"><label for="{{ form.phone.id_for_label }}">{{ form.phone.label }} number:</label></th>-->
-<!--                <td class="col-12 col-md-7">{{ form.phone }}</td>-->
-<!--                {% if form.phone.errors %}<td>{{ form.phone.errors }}</td>{% endif %}-->
-<!--            </tr>-->
-<!--            <tr class="fieldWrapper row d-flex flex-column flex-md-row">-->
-<!--                <th class="col-12 col-md-5"><label for="{{ form.email.id_for_label }}">E-mail:</label></th>-->
-<!--                <td class="col-12 col-md-7">{{ form.email }}</td>-->
-<!--                {% if form.email.errors %}<td>{{ form.email.errors }}</td>{% endif %}-->
-<!--            </tr>-->
-<!--            <tr class="fieldWrapper row d-flex flex-column flex-md-row" id="locationField">-->
-<!--                <th class="col-12 col-md-5"><label for="{{ form.address.id_for_label }}">{{ form.address.label }}:</label></th>-->
-<!--                <td class="col-12 col-md-7">{{ form.address }}</td>-->
-<!--                {% if form.address.errors %}<td>{{ form.address.errors }}</td>{% endif %}-->
-<!--            </tr>-->
-<!--            <tr class="fieldWrapper row d-flex flex-column flex-md-row">-->
-<!--                <th class="col-12 col-md-5"><label for="{{ form.country.id_for_label }}">{{ form.country.label }}:</label></th>-->
-<!--                <td class="col-12 col-md-7">{{ form.country }}</td>-->
-<!--                {% if form.country.errors %}<td>{{ form.country.errors }}</td>{% endif %}-->
-<!--            </tr>-->
-<!--            <tr class="fieldWrapper row d-flex flex-column flex-md-row">-->
-<!--                <th class="col-12 col-md-5"><label for="{{ form.state.id_for_label }}">{{ form.state.label }}:</label></th>-->
-<!--                <td class="col-12 col-md-7">{{ form.state }}</td>-->
-<!--                {% if form.state.errors %}<td>{{ form.state.errors }}</td>{% endif %}-->
-<!--            </tr>-->
-<!--            <tr class="fieldWrapper row d-flex flex-column flex-md-row">-->
-<!--                <th class="col-12 col-md-5"><label for="{{ form.city.id_for_label }}">{{ form.city.label }}:</label></th>-->
-<!--                <td class="col-12 col-md-7">{{ form.city }}</td>-->
-<!--                {% if form.city.errors %}<td>{{ form.city.errors }}</td>{% endif %}-->
-<!--            </tr>-->
-<!--            <tr class="fieldWrapper row d-flex flex-column flex-md-row">-->
-<!--                <th class="col-12 col-md-5"><label for="{{ form.street.id_for_label }}">{{ form.street.label }}:</label></th>-->
-<!--                <td class="col-12 col-md-7">{{ form.street }}</td>-->
-<!--                {% if form.street.errors %}<td>{{ form.street.errors }}</td>{% endif %}-->
-<!--            </tr>-->
-<!--            <tr class="fieldWrapper row d-flex flex-column flex-md-row">-->
-<!--                <th class="col-12 col-md-5"><label for="{{ form.house.id_for_label }}">{{ form.house.label }}:</label></th>-->
-<!--                <td class="col-12 col-md-7">{{ form.house }}</td>-->
-<!--                {% if form.house.errors %}<td>{{ form.house.errors }}</td>{% endif %}-->
-<!--            </tr>-->
-<!--            <tr class="fieldWrapper row d-flex flex-column flex-md-row">-->
-<!--                <th class="col-12 col-md-5"><label for="{{ form.postal_code.id_for_label }}">{{ form.postal_code.label }}:</label></th>-->
-<!--                <td class="col-12 col-md-7">{{ form.postal_code }}</td>-->
-<!--                {% if form.postal_code.errors %}<td>{{ form.postal_code.errors }}</td>{% endif %}-->
-<!--            </tr>-->
-<!--        </tbody>-->
-<!--    </table>-->
-<!--    <input type="submit" value="Save">-->
-<!--</form>-->
 
 <script>
 // This sample uses the Autocomplete widget to help the user select a

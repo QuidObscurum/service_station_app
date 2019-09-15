@@ -7,8 +7,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
-from .models import Customer
-from .forms import CustomerForm, SearchForm
+from .models import Customer, Vehicle
+from .forms import CustomerForm, SearchForm, VehicleForm
 
 
 class CustomerCreateView(CreateView):
@@ -22,7 +22,67 @@ class CustomerCreateView(CreateView):
         context['card_title'] = "Create a customer card"
         context['page_title'] = "Create Customer"
         return context
-    # success_url = 'manager:customer_card'
+    success_url = 'manager:customer_card'
+
+
+class VehicleCreateView(CreateView):
+    model = Vehicle
+    template_name = 'servicemanager/manage_vehicle.html'
+    form_class = VehicleForm
+
+    # def get_context_object_name(self):
+    #     return 'car_form'
+    # def dispatch(self, request, *args, **kwargs):
+    #     print("*****DISPATCH*****", '\n', request, '\n', args, '\n', kwargs)
+    #     return super().dispatch(request, *args, **kwargs)
+
+    # ** ** *DISPATCH ** ** *
+    # < WSGIRequest: POST
+    # '/manage/customer_card/7/create_vehicle/' >
+    # ()
+    # {'pk': 7}
+
+    def post(self, request, *args, **kwargs):
+        print("*****POST*****", '\n', request.POST, '\n', args, '\n', kwargs)
+        # print(self.form_invalid(form))
+
+        customer_pk = self.kwargs.get('pk')
+        customer_obj = Customer.objects.all().filter(pk=customer_pk).first()
+        print(customer_obj.id)
+        form = self.get_form()
+        print(form)
+        # if form.is_valid():
+        #     return self.form_valid(form)
+        # else:
+        #     return self.form_invalid(form)
+
+        return super().post(request, *args, **kwargs)
+
+# *****POST*****
+# < QueryDict: {'csrfmiddlewaretoken': ['8TAynKAwZeGi0jwr9MkrsqJdZMPbP04TTyVcecQP8ImMkOb37XbDmv6sO2mehixF'],
+#               'make': ['BMW'], 'model': ['X2'], 'year': ['2016'], 'vin': ['1N4AL11DX2C230798']} >
+# ()
+# {'pk': 7}
+# 7
+# <input type = "text" name = "make" value = "BMW"
+    # placeholder = "Make" class ="input" maxlength="70" required id="id_make">
+# <input type = "text" name = "model" value = "X2"
+    # placeholder = "Model" class ="input" maxlength="120" required id="id_model">
+# <input type = "text" name = "year" value = "2016"
+    # placeholder = "Year" class ="input" required id="id_year">
+# <input type = "text" name = "vin" value = "1N4AL11DX2C230798"
+    # placeholder = "VIN" class ="input" maxlength="17" required id="id_vin">
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['car_form'] = context['form']
+        del context['form']
+        print(context)
+        return context
+
+    def get_success_url(self):
+        # return reverse('manager:customer_card', pk=self.owner.pk)
+        return reverse('manager:main')
 
 
 class CustomerUpdateView(UpdateView):
@@ -45,22 +105,28 @@ class CustomerUpdateView(UpdateView):
 class CustomerDetailView(DetailView):
     model = Customer
 
-    # def get_object(self, queryset=None):
-    #     obj_id = self.kwargs.get("pk")
+    def get_vehicle_form(self):
+        request = self.request
+        if request.method == 'POST':
+            car_form = VehicleForm(request.POST)
 
     def get_context_data(self, **kwargs):
-        from django.core import serializers
-
-        serialized_data = serializers.serialize("python", Customer.objects.all().filter(pk=self.kwargs.get('pk')))
-        data = serialized_data[0]['fields']
-
         context = super().get_context_data(**kwargs)
-        context['data'] = data
+        # from django.core import serializers
+        # serialized_data = serializers.serialize("python", Customer.objects.all().filter(pk=self.kwargs.get('pk')))
+        # data = serialized_data[0]['fields']
+        # context['data'] = data
+        # VehicleCreateView
 
         can_delete = True
         if can_delete:
             context['can_delete'] = 'true'
 
+        customer_pk = self.kwargs.get('pk')
+        customer_obj = Customer.objects.all().filter(pk=customer_pk).first()
+        vehicle_qs = customer_obj.vehicle_set.all()
+        context['vehicles'] = vehicle_qs
+        print(context['customer'])
         return context
 
 

@@ -7,6 +7,7 @@ from .views import (
     CustomerDeleteView,
     MainView,
     CustomerListView,
+    VehicleCreateView,
 )
 
 
@@ -20,5 +21,7 @@ urlpatterns = [
     path('create_customer/', CustomerCreateView.as_view(), name='create_customer'),
     path('update_customer/<int:pk>/', CustomerUpdateView.as_view(), name='update_customer'),
     path('customer_card/<int:pk>/', CustomerDetailView.as_view(), name='customer_card'),
-    path('<int:pk>/del', CustomerDeleteView.as_view(), name='delete_customer'),
+    path('<int:pk>/del/', CustomerDeleteView.as_view(), name='delete_customer'),
+
+    path('customer_card/<int:pk>/create_vehicle/', VehicleCreateView.as_view(), name='create_vehicle'),
 ]

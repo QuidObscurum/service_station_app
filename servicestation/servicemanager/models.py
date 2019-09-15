@@ -39,6 +39,9 @@ class Vehicle(models.Model):
     def __str__(self):
         return f"{self.vin}"
 
+    def get_absolute_url(self):
+        return reverse("manager:customer_card", kwargs={"pk": self.owner.pk})
+
 
 class Order(models.Model):
     vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
