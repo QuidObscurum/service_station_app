@@ -336,6 +336,7 @@ button:disabled {
     }
 
     .input,
+    .output,
     .form-header-title {
         width: 96%;
     }

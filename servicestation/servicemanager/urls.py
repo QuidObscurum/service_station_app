@@ -23,5 +23,5 @@ urlpatterns = [
     path('customer_card/<int:pk>/', CustomerDetailView.as_view(), name='customer_card'),
     path('<int:pk>/del/', CustomerDeleteView.as_view(), name='delete_customer'),
 
-    path('customer_card/<int:pk>/create_vehicle/', VehicleCreateView.as_view(), name='create_vehicle'),
+    path('customer_card/create_vehicle/<int:owner_id>/', VehicleCreateView.as_view(), name='create_vehicle'),
 ]

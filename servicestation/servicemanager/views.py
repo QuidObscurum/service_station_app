@@ -1,5 +1,5 @@
 # from django.shortcuts import render
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse
 from django.conf import settings
 from django.views.generic.base import TemplateView
@@ -30,59 +30,41 @@ class VehicleCreateView(CreateView):
     template_name = 'servicemanager/manage_vehicle.html'
     form_class = VehicleForm
 
-    # def get_context_object_name(self):
-    #     return 'car_form'
-    # def dispatch(self, request, *args, **kwargs):
-    #     print("*****DISPATCH*****", '\n', request, '\n', args, '\n', kwargs)
-    #     return super().dispatch(request, *args, **kwargs)
+    def get_object(self, queryset=None):
+        obj_id = self.kwargs.get("owner_id")
+        return get_object_or_404(Customer, id=obj_id)
 
-    # ** ** *DISPATCH ** ** *
-    # < WSGIRequest: POST
-    # '/manage/customer_card/7/create_vehicle/' >
-    # ()
-    # {'pk': 7}
-
-    def post(self, request, *args, **kwargs):
-        print("*****POST*****", '\n', request.POST, '\n', args, '\n', kwargs)
-        # print(self.form_invalid(form))
-
-        customer_pk = self.kwargs.get('pk')
-        customer_obj = Customer.objects.all().filter(pk=customer_pk).first()
-        print(customer_obj.id)
-        form = self.get_form()
-        print(form)
-        # if form.is_valid():
-        #     return self.form_valid(form)
-        # else:
-        #     return self.form_invalid(form)
-
+    def dispatch(self, request, *args, **kwargs):
+        print("***** dispatch *****", '\n\t', request, '\n\t', args, '\n\t', kwargs)
+        # self.get_context_data(owner_id=kwargs['owner_id'])
         return super().post(request, *args, **kwargs)
 
-# *****POST*****
-# < QueryDict: {'csrfmiddlewaretoken': ['8TAynKAwZeGi0jwr9MkrsqJdZMPbP04TTyVcecQP8ImMkOb37XbDmv6sO2mehixF'],
-#               'make': ['BMW'], 'model': ['X2'], 'year': ['2016'], 'vin': ['1N4AL11DX2C230798']} >
-# ()
-# {'pk': 7}
-# 7
-# <input type = "text" name = "make" value = "BMW"
-    # placeholder = "Make" class ="input" maxlength="70" required id="id_make">
-# <input type = "text" name = "model" value = "X2"
-    # placeholder = "Model" class ="input" maxlength="120" required id="id_model">
-# <input type = "text" name = "year" value = "2016"
-    # placeholder = "Year" class ="input" required id="id_year">
-# <input type = "text" name = "vin" value = "1N4AL11DX2C230798"
-    # placeholder = "VIN" class ="input" maxlength="17" required id="id_vin">
+    # def post(self, request, *args, **kwargs):
+    #     print("*****POST*****", '\n', request.POST, '\n', args, '\n', kwargs)
+    #     customer_pk = self.kwargs.get('pk')
+    #     customer_obj = Customer.objects.all().filter(pk=customer_pk).first()
+    #     print(customer_obj.id)
+    #     form = self.get_form()
+    #     print(form)
+    #     # if form.is_valid():
+    #     #     return self.form_valid(form)
+    #     # else:
+    #     #     return self.form_invalid(form)
+    #
+    #     return super().post(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        owner = self.get_object()
         context['car_form'] = context['form']
         del context['form']
-        print(context)
+        context['owner'] = owner
         return context
 
     def get_success_url(self):
         # return reverse('manager:customer_card', pk=self.owner.pk)
-        return reverse('manager:main')
+        owner = self.get_object()
+        return reverse('manager:customer_card', args=[owner.pk])
 
 
 class CustomerUpdateView(UpdateView):
@@ -105,10 +87,10 @@ class CustomerUpdateView(UpdateView):
 class CustomerDetailView(DetailView):
     model = Customer
 
-    def get_vehicle_form(self):
-        request = self.request
-        if request.method == 'POST':
-            car_form = VehicleForm(request.POST)
+    # def get_vehicle_form(self):
+    #     request = self.request
+    #     if request.method == 'POST':
+    #         car_form = VehicleForm(request.POST)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -116,7 +98,6 @@ class CustomerDetailView(DetailView):
         # serialized_data = serializers.serialize("python", Customer.objects.all().filter(pk=self.kwargs.get('pk')))
         # data = serialized_data[0]['fields']
         # context['data'] = data
-        # VehicleCreateView
 
         can_delete = True
         if can_delete:
@@ -126,7 +107,6 @@ class CustomerDetailView(DetailView):
         customer_obj = Customer.objects.all().filter(pk=customer_pk).first()
         vehicle_qs = customer_obj.vehicle_set.all()
         context['vehicles'] = vehicle_qs
-        print(context['customer'])
         return context
 
 

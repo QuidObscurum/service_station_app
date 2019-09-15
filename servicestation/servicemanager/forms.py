@@ -76,9 +76,9 @@ class VehicleForm(forms.ModelForm):
         model = Vehicle
         fields = ['owner', 'make', 'model', 'year', 'vin']
         widgets = {
-            'owner': forms.HiddenInput(attrs={
-                "class": "input",
-            }),
+            # 'owner': forms.HiddenInput(attrs={
+            #     "class": "input",
+            # }),
             'make': forms.TextInput(attrs={
                 'placeholder': "Make", "class": "input",
             }),

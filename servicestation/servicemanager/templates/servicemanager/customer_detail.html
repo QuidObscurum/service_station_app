@@ -45,25 +45,32 @@
             </div>
         </div>
 
-        <div class="form-header">
-            <div class="form-header-title"><strong>Cars ({{ vehicles|length }})</strong></div>
+        <div class="form-header mul-fields">
+            <div class="form-header-title"><strong>Cars ({{ vehicles|length }})
+                <a href="{% url 'manager:create_vehicle' customer.id %}"
+                   class="add-link" title="Add a car"> &#43;</a></strong>
+<!--                <a href="{% url 'manager:create_vehicle' customer.pk %}" class="my-btn my-btn-edit">Add</a>-->
+            </div>
+<!--            <div class="my-btn-group">-->
+<!--                <a href="{% url 'manager:create_vehicle' customer.pk %}" class="my-btn my-btn-edit">Add</a>-->
+<!--            </div>-->
         </div>
 
-        <form action="{% url 'manager:create_vehicle' customer.pk %}" method="post" class="form-card">
-            {% csrf_token %}
-            <div class="mul-fields">
-                <input type="hidden" name="owner" required class="input" value="{{ customer.id }}">
-                <input type="text" name="make" required class="input" placeholder="Make">
-                <input type="text" name="model" required class="input" placeholder="Model">
-            </div>
-            <div class="mul-fields">
-                <input type="text" name="year" required class="input" placeholder="Year">
-                <input type="text" name="vin" required class="input" placeholder="VIN">
-            </div>
-            <div class="single-field">
-                <input type="submit" value="Add" class="my-btn my-btn-save">
-            </div>
-        </form>
+<!--        <form action="{# url 'manager:create_vehicle' customer.pk #}" method="post" class="form-card">-->
+<!--            {# csrf_token #}-->
+<!--            <div class="mul-fields">-->
+<!--                <input type="hidden" name="owner" required class="input" value="{# customer.id #}">-->
+<!--                <input type="text" name="make" required class="input" placeholder="Make">-->
+<!--                <input type="text" name="model" required class="input" placeholder="Model">-->
+<!--            </div>-->
+<!--            <div class="mul-fields">-->
+<!--                <input type="text" name="year" required class="input" placeholder="Year">-->
+<!--                <input type="text" name="vin" required class="input" placeholder="VIN">-->
+<!--            </div>-->
+<!--            <div class="single-field">-->
+<!--                <input type="submit" value="Add" class="my-btn my-btn-save">-->
+<!--            </div>-->
+<!--        </form>-->
 
 
     </div>
