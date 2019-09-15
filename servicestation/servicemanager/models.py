@@ -34,7 +34,7 @@ class Vehicle(models.Model):
     make = models.CharField(max_length=70)
     model = models.CharField(max_length=120)
     year = models.PositiveSmallIntegerField(validators=[validate_vehicle_year])
-    vin = models.CharField(max_length=17)
+    vin = models.CharField(max_length=17, unique=True)
 
     def __str__(self):
         return f"{self.vin}"
