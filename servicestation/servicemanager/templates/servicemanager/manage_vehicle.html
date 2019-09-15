@@ -1,0 +1,21 @@
+<!--<form action="" method="post" class="manage-customer-form"> {% csrf_token %}-->
+    {{ car_form.non_field_errors }}
+    <div class="mul-fields">
+        {{ car_form.make }}
+        {% if car_form.make.errors %}<div>{{ car_form.make.errors }}</div>{% endif %}
+
+        {{ car_form.model }}
+        {% if car_form.model.errors %}<div>{{ car_form.model.errors }}</div>{% endif %}
+    </div>
+    <div class="mul-fields">
+        {{ car_form.year }}
+        {% if car_form.year.errors %}<div>{{ car_form.year.errors }}</div>{% endif %}
+
+        {{ car_form.vin }}
+        {% if car_form.vin.errors %}<div>{{ car_form.vin.errors }}</div>{% endif %}
+    </div>
+
+<!--    <div class="single-field">-->
+<!--        <input type="submit" value="Save" class="my-btn my-btn-save">-->
+<!--    </div>-->
+<!--</form>-->
