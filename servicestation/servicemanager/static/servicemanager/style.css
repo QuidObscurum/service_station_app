@@ -78,6 +78,24 @@ body {
     transition: .4s;
 }
 
+.output-car {
+    margin: 0 2%;
+    margin-bottom: 5px;
+    border-bottom: 1.75px solid #9e9e9e;
+    padding: 10px 0;
+    transition: .4s;
+}
+
+.info-1 {
+    width: 20%;
+}
+.info-2 {
+    width: 40%;
+}
+.info-3 {
+    width: 40%;
+}
+
 .input {
     width: 46%;
     margin: 0 2%;
@@ -194,7 +212,16 @@ input:focus:-ms-input-placeholder {
     margin: 0 2% 0 0; /*top right bottom left*/
 }
 
-.my-btn-edit:hover {
+.my-btn-register {
+    color: #f8f9fa;
+    background-color: #17a2b8;
+    width: 23%;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.my-btn-edit:hover,
+.my-btn-register:hover {
     color: #fff;
     background-color: #0f6c7b;
     text-decoration: none;
@@ -354,15 +381,10 @@ button:disabled {
         width: 80%;
     }
 
-    .modal-btn-cancel{
-        width: 50%;
-    }
-
-    .modal-btn-delete{
-        width: 50%;
-    }
-
-    .my-btn-save {
+    .modal-btn-cancel,
+    .modal-btn-delete,
+    .my-btn-save,
+    .my-btn-register {
         width: 50%;
     }
 
@@ -375,14 +397,9 @@ button:disabled {
         width: 40%;
     }
 
-    .modal-btn-cancel{
-        width: 40%;
-    }
-
-    .modal-btn-delete{
-        width: 40%;
-    }
-
+    .modal-btn-cancel,
+    .modal-btn-delete,
+    .my-btn-register,
     .my-btn-save {
         width: 40%;
     }
@@ -396,7 +413,8 @@ button:disabled {
 @media only screen and (min-width: 768px) {
     .modal-btn-cancel,
     .modal-btn-delete,
-    .my-btn-save {
+    .my-btn-save,
+    .my-btn-register {
         width: 30%;
     }
 
@@ -412,17 +430,13 @@ button:disabled {
         width: 30%;
     }
 
-    .modal-btn-cancel{
+    .modal-btn-cancel,
+    .modal-btn-delete,
+    .my-btn-save,
+    .my-btn-register {
         width: 23%;
     }
 
-    .modal-btn-delete{
-        width: 23%;
-    }
-
-    .my-btn-save {
-        width: 23%;
-    }
 }
 
 @media only screen and (min-width: 1998px) {

@@ -18,8 +18,9 @@
             {{ form.last_name }}
             {% if form.last_name.errors %}<div>{{ form.last_name.errors }}</div>{% endif %}
         </div>
-        <div class="single-field">
+        <div class="btn-group">
             <input type="submit" value="Search" class="my-btn my-btn-save">
+            <a href="{% url 'manager:create_customer' %}" class="my-btn my-btn-register">Register</a>
         </div>
     </form>
 
