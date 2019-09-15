@@ -1,10 +1,11 @@
 {% extends "servicemanager/base.html" %}
-{% block title %}<title>Add a Car</title>{% endblock %}
+{% block title %}<title>{% if page_title %}{{ page_title }}{% else %}Add a Car{% endif %}</title>{% endblock %}
 {% block content %}
 <div class="wrapper">
     <form action="" method="post" class="manage-customer-form"> {% csrf_token %}
         <div class="form-title">
-            <strong>Add a car for {{ owner.first_name }} {{ owner.last_name }}</strong>
+            <strong>{% if card_title %}{{ card_title }}{% else %}
+                Add a car for {{ owner.first_name }} {{ owner.last_name }}{% endif %}</strong>
         </div>
         {{ car_form.non_field_errors }}
         <div class="mul-fields">

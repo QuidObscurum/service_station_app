@@ -34,10 +34,10 @@ class VehicleCreateView(CreateView):
         obj_id = self.kwargs.get("owner_id")
         return get_object_or_404(Customer, id=obj_id)
 
-    def dispatch(self, request, *args, **kwargs):
-        print("***** dispatch *****", '\n\t', request, '\n\t', args, '\n\t', kwargs)
-        # self.get_context_data(owner_id=kwargs['owner_id'])
-        return super().post(request, *args, **kwargs)
+    # def dispatch(self, request, *args, **kwargs):
+    #     print("***** dispatch *****", '\n\t', request, '\n\t', args, '\n\t', kwargs)
+    #     # self.get_context_data(owner_id=kwargs['owner_id'])
+    #     return super().post(request, *args, **kwargs)
 
     # def post(self, request, *args, **kwargs):
     #     print("*****POST*****", '\n', request.POST, '\n', args, '\n', kwargs)
@@ -67,6 +67,22 @@ class VehicleCreateView(CreateView):
         return reverse('manager:customer_card', args=[owner.pk])
 
 
+class VehicleUpdateView(UpdateView):
+    model = Vehicle
+    template_name = 'servicemanager/manage_vehicle.html'
+    form_class = VehicleForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['card_title'] = "Edit the vehicle"
+        context['page_title'] = "Edit Vehicle"
+        context['car_form'] = context['form']
+        del context['form']
+        obj = self.get_object()
+        context['owner'] = obj.owner
+        return context
+
+
 class CustomerUpdateView(UpdateView):
     model = Customer
     template_name = 'servicemanager/manage_customer.html'
@@ -86,11 +102,6 @@ class CustomerUpdateView(UpdateView):
 
 class CustomerDetailView(DetailView):
     model = Customer
-
-    # def get_vehicle_form(self):
-    #     request = self.request
-    #     if request.method == 'POST':
-    #         car_form = VehicleForm(request.POST)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -175,6 +186,4 @@ class MainView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = self.form_class
-        print("===== MainViewREQUEST =====", self.request.GET)
-
         return context

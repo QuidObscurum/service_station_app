@@ -51,10 +51,40 @@
                    class="add-link" title="Add a car"> &#43;</a></strong>
 <!--                <a href="{% url 'manager:create_vehicle' customer.pk %}" class="my-btn my-btn-edit">Add</a>-->
             </div>
-<!--            <div class="my-btn-group">-->
-<!--                <a href="{% url 'manager:create_vehicle' customer.pk %}" class="my-btn my-btn-edit">Add</a>-->
-<!--            </div>-->
         </div>
+        {% for car in vehicles %}
+
+        <div class="form-card">
+            <div class="mul-fields">
+                <div class="output">
+                    <span class="card-label">Make:</span> {{ car.make }}
+                </div>
+                <div class="output">
+                    <span class="card-label">Model:</span> {{ car.model }}
+                </div>
+            </div>
+            <div class="mul-fields">
+                <div class="output">
+                    <span class="card-label">Year:</span> {{ car.year }}
+                </div>
+                <div class="output">
+                    <span class="card-label">VIN:</span> {{ car.vin }}
+                </div>
+            </div>
+
+        </div>
+        <div class="my-btn-group">
+            <a href="{% url 'manager:update_vehicle' car.pk %}" class="my-btn my-btn-edit">Orders</a>
+            <a href="{% url 'manager:update_vehicle' car.pk %}" class="my-btn my-btn-edit">Edit</a>
+            {% if can_delete %}
+            <button class="my-btn my-btn-delete" id="delVehicleLink">Delete</button>
+            {% else %}
+            <button class="my-btn my-btn-disabled" disabled>Delete</button>
+            {% endif %}
+        </div>
+        <hr>
+        {% endfor %}
+
 
 <!--        <form action="{# url 'manager:create_vehicle' customer.pk #}" method="post" class="form-card">-->
 <!--            {# csrf_token #}-->
@@ -88,7 +118,7 @@
               method="post" class="delete-customer-form"> {% csrf_token %}
 
             <div class="modal-msg">Are you sure you want to delete the customer? <br>
-                All data on related cars and orders will be deleted as well.</div>
+                All related data including orders will be deleted as well.</div>
             <div class="modal-btn-group">
                 <span class="my-btn modal-btn-cancel">Cancel</span>
 <!--                <a href="{% url 'manager:update_customer' customer.pk %}"-->

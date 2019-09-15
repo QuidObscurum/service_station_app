@@ -8,6 +8,7 @@ from .views import (
     MainView,
     CustomerListView,
     VehicleCreateView,
+    VehicleUpdateView
 )
 
 
@@ -24,4 +25,5 @@ urlpatterns = [
     path('<int:pk>/del/', CustomerDeleteView.as_view(), name='delete_customer'),
 
     path('customer_card/create_vehicle/<int:owner_id>/', VehicleCreateView.as_view(), name='create_vehicle'),
+    path('update_vehicle/<int:pk>/', VehicleUpdateView.as_view(), name='update_vehicle'),
 ]
