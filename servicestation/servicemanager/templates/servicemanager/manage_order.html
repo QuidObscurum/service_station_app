@@ -1,0 +1,31 @@
+{% extends "servicemanager/base.html" %}
+{% block title %}<title>{% if page_title %}{{ page_title }}{% else %}Add an Order{% endif %}</title>{% endblock %}
+{% block content %}
+<div class="wrapper">
+    <form action="" method="post" class="manage-customer-form"> {% csrf_token %}
+        <div class="form-title">
+            <strong>{% if card_title %}{{ card_title }}{% else %}
+                Add an order{% endif %}</strong>
+        </div>
+        {{ form.non_field_errors }}
+        <div class="mul-fields">
+            <input type="hidden" name="vehicle" required value="{{ vehicle.id }}">
+            {{ form.date }}
+            {% if form.date.errors %}<div>{{ form.date.errors }}</div>{% endif %}
+
+            {{ form.status }}
+            {% if form.status.errors %}<div>{{ form.status.errors }}</div>{% endif %}
+        </div>
+        <div class="mul-fields">
+            {{ form.amount }}
+            {% if form.amount.errors %}<div>{{ form.amount.errors }}</div>{% endif %}
+
+        </div>
+
+        <div class="single-field">
+            <input type="submit" value="Save" class="my-btn my-btn-save">
+        </div>
+    </form>
+</div>
+
+{% endblock %}

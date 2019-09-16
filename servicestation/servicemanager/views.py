@@ -7,8 +7,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
-from .models import Customer, Vehicle
-from .forms import CustomerForm, SearchForm, VehicleForm
+from .models import Customer, Vehicle, Order
+from .forms import CustomerForm, SearchForm, VehicleForm, OrderForm
 
 
 class CustomerCreateView(CreateView):
@@ -65,6 +65,28 @@ class VehicleCreateView(CreateView):
         # return reverse('manager:customer_card', pk=self.owner.pk)
         owner = self.get_object()
         return reverse('manager:customer_card', args=[owner.pk])
+
+
+class OrderCreateView(CreateView):
+    model = Order
+    template_name = 'servicemanager/manage_order.html'
+    form_class = OrderForm
+
+    def get_object(self, queryset=None):
+        obj_id = self.kwargs.get("vehicle_id")
+        print('\tOrderCreateView car id', obj_id)
+        return get_object_or_404(Vehicle, id=obj_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        vehicle = self.get_object()
+        context['vehicle'] = vehicle
+        print(context)
+        return context
+
+    def get_success_url(self):
+        vehicle = self.get_object()
+        return reverse('manager:customer_card', args=[vehicle.owner.pk])
 
 
 class VehicleUpdateView(UpdateView):
@@ -167,6 +189,48 @@ class CustomerListView(ListView):
             context['msg'] = msg
         if customer_list:
             context['customer_list'] = customer_list
+
+        return context
+
+
+class OrderListView(ListView):
+    model = Order
+    template_name = "servicemanager/orders_list.html"
+
+    def get_object(self, queryset=None):
+        vehicle_id = self.kwargs.get("vehicle_id")
+        return get_object_or_404(Vehicle, id=vehicle_id)
+
+    def get_queryset(self):
+        vehicle = self.get_object()
+        qs = self.model.objects.filter(
+            vehicle_id__exact=vehicle.id
+        )
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        vehicle = self.get_object()
+        context['vehicle'] = vehicle
+
+        print("+++ ListView+++", self.get_queryset())
+        qs = self.get_queryset()
+        msg = ''
+        orders_list = []
+
+        if not qs.exists():
+            msg = f"There are no orders for this car yet."
+            print(msg)
+        else:
+            msg = f"Found {len(qs)} orders:"
+            print(msg)
+            for obj in qs:
+                orders_list.append(obj)
+
+        if msg:
+            context['msg'] = msg
+        if orders_list:
+            context['orders_list'] = orders_list
 
         return context
 

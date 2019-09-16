@@ -1,5 +1,5 @@
 from django import forms
-from .models import Customer, Vehicle
+from .models import Customer, Vehicle, Order
 
 
 class SearchForm(forms.ModelForm):
@@ -92,3 +92,9 @@ class VehicleForm(forms.ModelForm):
                 'placeholder': "VIN", "class": "input",
             })
         }
+
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['vehicle', 'date', 'amount', 'status']

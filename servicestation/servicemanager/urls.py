@@ -8,7 +8,9 @@ from .views import (
     MainView,
     CustomerListView,
     VehicleCreateView,
-    VehicleUpdateView
+    VehicleUpdateView,
+    OrderCreateView,
+    OrderListView,
 )
 
 
@@ -26,4 +28,7 @@ urlpatterns = [
 
     path('customer_card/create_vehicle/<int:owner_id>/', VehicleCreateView.as_view(), name='create_vehicle'),
     path('update_vehicle/<int:pk>/', VehicleUpdateView.as_view(), name='update_vehicle'),
+
+    path('create_order/<int:vehicle_id>/', OrderCreateView.as_view(), name='create_order'),
+    path('orders_list/<int:vehicle_id>/', OrderListView.as_view(), name='orders_list'),
 ]

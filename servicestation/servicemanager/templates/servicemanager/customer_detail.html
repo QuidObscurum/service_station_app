@@ -74,7 +74,7 @@
 
         </div>
         <div class="my-btn-group">
-            <a href="{% url 'manager:update_vehicle' car.pk %}" class="my-btn my-btn-edit">Orders</a>
+            <a href="{% url 'manager:orders_list' car.id %}" class="my-btn my-btn-edit">Orders</a>
             <a href="{% url 'manager:update_vehicle' car.pk %}" class="my-btn my-btn-edit">Edit</a>
             {% if can_delete %}
             <button class="my-btn my-btn-delete" id="delVehicleLink">Delete</button>

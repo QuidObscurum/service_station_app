@@ -1,0 +1,57 @@
+{% extends "servicemanager/base.html" %}
+{% block title %}<title>Service Station Orders</title>{% endblock %}
+{% block content %}
+
+<div class="wrapper">
+    <div style="max-width: 700px; margin: 0 auto;">My Service Station</div>
+</div>
+
+<div class="wrapper">
+    <div class="manage-customer-form">
+        <div class="form-title">
+            <strong>{% if card_title %}{{ card_title }}{% else %}Manage Orders{% endif %}</strong>
+        </div>
+        <div class="form-header">
+            <div class="form-header-title"><strong>Orders ({{ orders_list|length }})
+                <a href="{% url 'manager:create_order' vehicle.id %}"
+                   class="add-link" title="Add an order"> &#43;</a></strong>
+    <!--        <a href="{% url 'manager:create_order' vehicle.id %}" class="my-btn my-btn-edit">Add</a>-->
+            </div>
+        </div>
+
+    {% if msg %}
+<!--    <div class="manage-customer-form">-->
+        <div class="form-header-title">
+            <strong>{{ msg }}</strong>
+        </div>
+
+        {% for obj in orders_list %}
+        <div class="form-card">
+            <div class="mul-fields">
+                <div class="output">
+                    <span class="card-label">Vehicle:</span> {{ obj.vehicle }}
+                </div>
+                <div class="output">
+                    <span class="card-label">Status:</span> {{ obj.status }}
+                </div>
+            </div>
+            <div class="mul-fields">
+                <div class="output">
+                    <span class="card-label">Date:</span> {{ obj.date }}
+                </div>
+                <div class="output">
+                    <span class="card-label">Amount:</span> {{ obj.amount }}
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    {% endif %}
+    </div>
+
+
+</div>
+
+
+{% endblock %}
