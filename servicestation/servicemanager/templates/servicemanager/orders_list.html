@@ -12,29 +12,22 @@
             <strong>{% if card_title %}{{ card_title }}{% else %}Manage Orders{% endif %}</strong>
         </div>
         <div class="form-header">
-            <div class="form-header-title"><strong>Orders ({{ orders_list|length }})
+            <div class="form-header-title"><strong>Orders for {{ vehicle.vin }} ({{ orders_list|length }})
                 <a href="{% url 'manager:create_order' vehicle.id %}"
                    class="add-link" title="Add an order"> &#43;</a></strong>
     <!--        <a href="{% url 'manager:create_order' vehicle.id %}" class="my-btn my-btn-edit">Add</a>-->
             </div>
         </div>
 
-    {% if msg %}
+        {% if msg %}
 <!--    <div class="manage-customer-form">-->
         <div class="form-header-title">
             <strong>{{ msg }}</strong>
         </div>
+        {% endif %}
 
         {% for obj in orders_list %}
         <div class="form-card">
-            <div class="mul-fields">
-                <div class="output">
-                    <span class="card-label">Vehicle:</span> {{ obj.vehicle }}
-                </div>
-                <div class="output">
-                    <span class="card-label">Status:</span> {{ obj.status }}
-                </div>
-            </div>
             <div class="mul-fields">
                 <div class="output">
                     <span class="card-label">Date:</span> {{ obj.date }}
@@ -43,11 +36,23 @@
                     <span class="card-label">Amount:</span> {{ obj.amount }}
                 </div>
             </div>
+            <div class="mul-fields">
+                <div class="output">
+                    <span class="card-label">Status:</span> {{ obj.status }}
+                </div>
+            </div>
+        </div>
 
+        <div class="my-btn-group">
+            <a href="{% url 'manager:update_order' obj.pk %}" class="my-btn my-btn-edit">Edit</a>
+            {% if obj.status != 'In progress' %}
+            <button class="my-btn my-btn-delete" id="delVehicleLink">Delete</button>
+            {% else %}
+            <button class="my-btn my-btn-disabled" disabled>Delete</button>
+            {% endif %}
         </div>
         {% endfor %}
 
-    {% endif %}
     </div>
 
 

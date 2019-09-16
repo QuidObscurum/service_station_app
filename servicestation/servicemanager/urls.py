@@ -11,6 +11,7 @@ from .views import (
     VehicleUpdateView,
     OrderCreateView,
     OrderListView,
+    OrderUpdateView,
 )
 
 
@@ -30,5 +31,7 @@ urlpatterns = [
     path('update_vehicle/<int:pk>/', VehicleUpdateView.as_view(), name='update_vehicle'),
 
     path('create_order/<int:vehicle_id>/', OrderCreateView.as_view(), name='create_order'),
+    path('update_order/<int:pk>/', OrderUpdateView.as_view(), name='update_order'),
     path('orders_list/<int:vehicle_id>/', OrderListView.as_view(), name='orders_list'),
+
 ]

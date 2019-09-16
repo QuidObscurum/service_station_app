@@ -50,11 +50,11 @@ class Order(models.Model):
     date = models.DateField(default=datetime.date.today)
     amount = models.DecimalField(max_digits=7, decimal_places=2)
     STATUS_CHOICES = [
-        ('Completed', 'completed'),
-        ('In progress', 'in progress'),
-        ('Cancelled', 'cancelled'),
+        ('Completed', 'Completed'),
+        ('In progress', 'In progress'),
+        ('Cancelled', 'Cancelled'),
     ]
-    status = models.CharField(max_length=11, choices=STATUS_CHOICES, default='In progress')
+    status = models.CharField(max_length=11, choices=STATUS_CHOICES, default='in progress')
     created_timestamp = models.DateTimeField(auto_now_add=True)
     updated_timestamp = models.DateTimeField(auto_now=True)
 

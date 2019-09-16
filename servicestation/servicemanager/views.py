@@ -86,7 +86,26 @@ class OrderCreateView(CreateView):
 
     def get_success_url(self):
         vehicle = self.get_object()
-        return reverse('manager:customer_card', args=[vehicle.owner.pk])
+        return reverse('manager:orders_list', args=[vehicle.id])
+
+
+class OrderUpdateView(UpdateView):
+    model = Order
+    template_name = 'servicemanager/manage_order.html'
+    form_class = OrderForm
+
+    def get_success_url(self):
+        order_obj = self.get_object()
+        return reverse('manager:orders_list', args=[order_obj.vehicle.id])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['card_title'] = "Edit the order"
+        context['page_title'] = "Edit Order"
+        obj = self.get_object()
+        context['vehicle'] = obj.vehicle
+
+        return context
 
 
 class VehicleUpdateView(UpdateView):
@@ -210,10 +229,9 @@ class OrderListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         vehicle = self.get_object()
         context['vehicle'] = vehicle
-
-        print("+++ ListView+++", self.get_queryset())
         qs = self.get_queryset()
         msg = ''
         orders_list = []
@@ -222,8 +240,6 @@ class OrderListView(ListView):
             msg = f"There are no orders for this car yet."
             print(msg)
         else:
-            msg = f"Found {len(qs)} orders:"
-            print(msg)
             for obj in qs:
                 orders_list.append(obj)
 

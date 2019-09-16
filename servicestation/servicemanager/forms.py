@@ -98,3 +98,17 @@ class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ['vehicle', 'date', 'amount', 'status']
+        widgets = {
+            'vehicle': forms.TextInput(attrs={
+                'placeholder': "Vehicle", "class": "input",
+            }),
+            'date': forms.widgets.DateInput(attrs={
+                'type': "date", "class": "input",
+            }),
+            'status': forms.widgets.Select(attrs={
+                "class": "input",
+            }),
+            'amount': forms.TextInput(attrs={
+                'placeholder': "Amount", "class": "input", "type": "number", "step": "0.01",
+            }),
+        }
