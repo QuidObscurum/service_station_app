@@ -1,8 +1,8 @@
-var delBtn = document.getElementById("delCustomerLink");
+var delBtn = document.getElementById("delLink");
 var modal = document.getElementById("confirmModal");
 var closeSpan = document.getElementsByClassName("close")[0];
 
-var cancel = document.getElementsByClassName("modal-btn-cancel")[0];
+var cancelBtn = document.getElementsByClassName("modal-btn-cancel")[0];
 
 delBtn.onclick = function() {
   modal.style.display = "block";
@@ -13,7 +13,7 @@ closeSpan.onclick = function() {
   modal.style.display = "none";
 }
 
-cancel.onclick = function() {
+cancelBtn.onclick = function() {
   modal.style.display = "none";
 }
 

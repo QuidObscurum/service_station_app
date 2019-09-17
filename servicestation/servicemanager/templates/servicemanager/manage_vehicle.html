@@ -8,26 +8,66 @@
                 Add a car for {{ owner.first_name }} {{ owner.last_name }}{% endif %}</strong>
         </div>
         {{ car_form.non_field_errors }}
-        <div class="mul-fields">
-            <input type="hidden" name="owner" required class="input" value="{{ owner.id }}">
-            {{ car_form.make }}
-            {% if car_form.make.errors %}<div>{{ car_form.make.errors }}</div>{% endif %}
+        <div class="form-card">
+            <div class="mul-fields">
+                <input type="hidden" name="owner" required class="input" value="{{ owner.id }}">
+                {{ car_form.make }}
+                {% if car_form.make.errors %}<div>{{ car_form.make.errors }}</div>{% endif %}
 
-            {{ car_form.model }}
-            {% if car_form.model.errors %}<div>{{ car_form.model.errors }}</div>{% endif %}
-        </div>
-        <div class="mul-fields">
-            {{ car_form.year }}
-            {% if car_form.year.errors %}<div>{{ car_form.year.errors }}</div>{% endif %}
+                {{ car_form.model }}
+                {% if car_form.model.errors %}<div>{{ car_form.model.errors }}</div>{% endif %}
+            </div>
+            <div class="mul-fields">
+                {{ car_form.year }}
+                {% if car_form.year.errors %}<div>{{ car_form.year.errors }}</div>{% endif %}
 
-            {{ car_form.vin }}
-            {% if car_form.vin.errors %}<div>{{ car_form.vin.errors }}</div>{% endif %}
+                {{ car_form.vin }}
+                {% if car_form.vin.errors %}<div>{{ car_form.vin.errors }}</div>{% endif %}
+            </div>
         </div>
+
+        {% if page_title == "Edit Vehicle" %}
+        <div class="my-btn-group">
+            <input type="submit" value="Save" class="my-btn my-btn-edit" name="save">
+
+            {% if can_delete %}
+            <span class="my-btn my-btn-delete" id="delLink">Delete</span>
+            {% else %}
+            <button class="my-btn my-btn-disabled" disabled title="There are orders in progress">Delete</button>
+            {% endif %}
+        </div>
+        {% else %}
 
         <div class="single-field">
-            <input type="submit" value="Save" class="my-btn my-btn-save">
+            <input type="submit" value="Save" class="my-btn my-btn-save" name="save">
         </div>
+        {% endif %}
+
     </form>
 </div>
+
+{% if page_title == "Edit Vehicle" %}
+<!-- The Modal -->
+<div id="confirmModal" class="my-modal">
+
+  <!-- Modal content -->
+    <div class="my-modal-content">
+        <span class="close">&times;</span><!--<span aria-hidden="true">×</span>-->
+        <div><b>Confirm deletion</b></div>
+
+        <form action="{% url 'manager:delete_vehicle' vehicle.pk %}"
+              method="post" class="delete-customer-form"> {% csrf_token %}
+
+            <div class="modal-msg">Are you sure you want to delete the car? <br>
+                All related data including orders will be deleted as well.</div>
+            <div class="modal-btn-group">
+                <span class="my-btn modal-btn-cancel">Cancel</span>
+                <input name="delete" type="submit" value="Delete" class="my-btn modal-btn-delete">
+            </div>
+        </form>
+    </div>
+
+</div>
+{% endif %}
 
 {% endblock %}

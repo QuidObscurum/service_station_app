@@ -9,18 +9,19 @@
 <div class="wrapper">
     <div class="manage-customer-form">
         <div class="form-title">
-            <strong>{% if card_title %}{{ card_title }}{% else %}Manage Orders{% endif %}</strong>
+            <strong>{% if card_title %}{{ card_title }}{% else %}Manage
+                <a href="{% url 'manager:customer_card' vehicle.owner.pk %}">
+                    {{ vehicle.owner.first_name }} {{ vehicle.owner.last_name }}'s
+                </a> Orders{% endif %}</strong>
         </div>
         <div class="form-header">
             <div class="form-header-title"><strong>Orders for {{ vehicle.vin }} ({{ orders_list|length }})
                 <a href="{% url 'manager:create_order' vehicle.id %}"
                    class="add-link" title="Add an order"> &#43;</a></strong>
-    <!--        <a href="{% url 'manager:create_order' vehicle.id %}" class="my-btn my-btn-edit">Add</a>-->
             </div>
         </div>
 
         {% if msg %}
-<!--    <div class="manage-customer-form">-->
         <div class="form-header-title">
             <strong>{{ msg }}</strong>
         </div>
@@ -42,21 +43,75 @@
                 </div>
             </div>
         </div>
-
         <div class="my-btn-group">
             <a href="{% url 'manager:update_order' obj.pk %}" class="my-btn my-btn-edit">Edit</a>
-            {% if obj.status != 'In progress' %}
-            <button class="my-btn my-btn-delete" id="delVehicleLink">Delete</button>
+            {% if obj.status|lower != 'in progress' %}
+            <button class="my-btn my-btn-delete trigger" id="{{obj.pk}}">Delete</button>
             {% else %}
-            <button class="my-btn my-btn-disabled" disabled>Delete</button>
+            <button class="my-btn my-btn-disabled" disabled title="The order is in progress">Delete</button>
             {% endif %}
         </div>
+        <hr>
         {% endfor %}
 
     </div>
+</div>
 
+{% for obj in orders_list %}
+<!-- The Modal -->
+<div id="confirmModal{{obj.pk}}" class="my-modal">
+
+  <!-- Modal content -->
+    <div class="my-modal-content">
+        <span id="close{{obj.pk}}" class="close">&times;</span><!--<span aria-hidden="true">×</span>-->
+        <div><b>Confirm deletion</b></div>
+
+        <form action="{% url 'manager:delete_order' obj.pk %}"
+              method="post" class="delete-customer-form"> {% csrf_token %}
+
+            <div class="modal-msg">Are you sure you want to delete the order?</div>
+            <div class="modal-btn-group">
+                <span class="my-btn modal-btn-cancel" id="cancel{{obj.pk}}">Cancel</span>
+
+                <input name="delete" type="submit" value="Delete" class="my-btn modal-btn-delete">
+            </div>
+        </form>
+    </div>
 
 </div>
+{% endfor %}
+
+<script>
+
+var triggers = document.getElementsByClassName("trigger");
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+for (var i = 0; i < triggers.length; i++) {
+    var t = triggers[i];
+    t.onclick = function() {
+        var obj_pk = t.id;
+        var close = document.getElementById("close"+obj_pk);
+        var cancel = document.getElementById("cancel"+obj_pk);
+        var modal_id = "confirmModal" + obj_pk;
+        modal = document.getElementById(modal_id);
+        modal.style.display = "block";
+
+        close.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        cancel.onclick = function() {
+            modal.style.display = "none";
+        }
+    }
+}
+
+
+
+</script>
 
 
 {% endblock %}

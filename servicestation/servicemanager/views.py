@@ -96,6 +96,7 @@ class OrderUpdateView(UpdateView):
 
     def get_success_url(self):
         order_obj = self.get_object()
+        print(order_obj)
         return reverse('manager:orders_list', args=[order_obj.vehicle.id])
 
     def get_context_data(self, **kwargs):
@@ -120,7 +121,14 @@ class VehicleUpdateView(UpdateView):
         context['car_form'] = context['form']
         del context['form']
         obj = self.get_object()
+        context['vehicle'] = obj
         context['owner'] = obj.owner
+
+        order_qs = obj.order_set.all()
+        orders_in_progress = order_qs.filter(status__iexact="In Progress")
+        if not orders_in_progress.exists():
+            context["can_delete"] = 'true'
+
         return context
 
 
@@ -151,14 +159,20 @@ class CustomerDetailView(DetailView):
         # data = serialized_data[0]['fields']
         # context['data'] = data
 
-        can_delete = True
-        if can_delete:
-            context['can_delete'] = 'true'
-
         customer_pk = self.kwargs.get('pk')
         customer_obj = Customer.objects.all().filter(pk=customer_pk).first()
         vehicle_qs = customer_obj.vehicle_set.all()
         context['vehicles'] = vehicle_qs
+        vehicles_orders_in_progress = 0
+
+        for obj in vehicle_qs:
+            orders_in_progress = obj.order_set.all().filter(status__iexact="In Progress")
+            print(orders_in_progress)
+            if orders_in_progress.exists():
+                vehicles_orders_in_progress += 1
+        if vehicles_orders_in_progress == 0:
+            context["can_delete"] = 'true'
+
         return context
 
 
@@ -170,8 +184,8 @@ class CustomerListView(ListView):
     def get_queryset(self):
         # if self.request.method == 'GET':
         #     query_dict = self.request.GET
-        first_name = self.request.GET.get('first_name')
-        last_name = self.request.GET.get('last_name')
+        first_name = self.request.GET.get('first_name').strip()
+        last_name = self.request.GET.get('last_name').strip()
 
         # if first_name is None or last_name is None:
         #     print("Please, provide the full name")  # FORM ERROR MSG
@@ -256,6 +270,24 @@ class CustomerDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse("manager:main")
+
+
+class VehicleDeleteView(DeleteView):
+    model = Vehicle
+
+    def get_success_url(self):
+        vehicle = self.get_object()
+        return reverse('manager:customer_card', args=[vehicle.owner.pk])
+
+
+class OrderDeleteView(DeleteView):
+    model = Order
+
+    def get_success_url(self):
+        print("TRIGGERED SUCCESS URL")
+        order = self.get_object()
+        # 'orders_list/<int:vehicle_id>/', OrderListView.as_view(), name = 'orders_list'
+        return reverse('manager:orders_list', args=[order.vehicle.id])
 
 
 class MainView(TemplateView):

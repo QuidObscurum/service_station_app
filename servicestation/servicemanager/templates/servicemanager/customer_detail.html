@@ -10,9 +10,9 @@
             <div class="my-btn-group">
                 <a href="{% url 'manager:update_customer' customer.pk %}" class="my-btn my-btn-edit">Edit</a>
                 {% if can_delete %}
-                <button class="my-btn my-btn-delete" id="delCustomerLink">Delete</button>
+                <button class="my-btn my-btn-delete" id="delLink">Delete</button>
                 {% else %}
-                <button class="my-btn my-btn-disabled" disabled>Delete</button>
+                <button class="my-btn my-btn-disabled" disabled title="There are orders in progress">Delete</button>
                 {% endif %}
             </div>
         </div>
@@ -76,11 +76,7 @@
         <div class="my-btn-group">
             <a href="{% url 'manager:orders_list' car.id %}" class="my-btn my-btn-edit">Orders</a>
             <a href="{% url 'manager:update_vehicle' car.pk %}" class="my-btn my-btn-edit">Edit</a>
-            {% if can_delete %}
-            <button class="my-btn my-btn-delete" id="delVehicleLink">Delete</button>
-            {% else %}
-            <button class="my-btn my-btn-disabled" disabled>Delete</button>
-            {% endif %}
+
         </div>
         <hr>
         {% endfor %}

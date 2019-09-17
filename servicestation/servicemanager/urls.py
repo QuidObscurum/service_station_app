@@ -9,9 +9,11 @@ from .views import (
     CustomerListView,
     VehicleCreateView,
     VehicleUpdateView,
+    VehicleDeleteView,
     OrderCreateView,
     OrderListView,
     OrderUpdateView,
+    OrderDeleteView,
 )
 
 
@@ -29,9 +31,11 @@ urlpatterns = [
 
     path('customer_card/create_vehicle/<int:owner_id>/', VehicleCreateView.as_view(), name='create_vehicle'),
     path('update_vehicle/<int:pk>/', VehicleUpdateView.as_view(), name='update_vehicle'),
+    path('delete_vehicle/<int:pk>/', VehicleDeleteView.as_view(), name='delete_vehicle'),
 
     path('create_order/<int:vehicle_id>/', OrderCreateView.as_view(), name='create_order'),
     path('update_order/<int:pk>/', OrderUpdateView.as_view(), name='update_order'),
+    path('delete_order/<int:pk>/', OrderDeleteView.as_view(), name='delete_order'),
     path('orders_list/<int:vehicle_id>/', OrderListView.as_view(), name='orders_list'),
 
 ]
