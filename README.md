@@ -44,8 +44,12 @@ Add the necessary variables:
 TEMPLATE_DEBUG=True
 SECRET_KEY=SECRET_KEY
 DEBUG=True
-GOOGLE_API_KEY=GOOGLE_PLACES_API_KEY
+GOOGLE_API_KEY=AIzaSyDivUdGRJ0LmZO0vyjiOCmM9younwcZWm8
 ```
+
+| Note: The project uses Google Places API, so an API key is required. The provided key expires by Oct.1, 2019 |
+| --- |
+
 
 #### To see Customer cards available:
 
