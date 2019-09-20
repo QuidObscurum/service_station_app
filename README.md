@@ -31,6 +31,13 @@ password = db_password # in quotes
 default-character-set = utf8
 ```
 
+If you are using docker mysql container, indicate the host and published port, e.g.:
+
+```
+port = 3306
+host = 127.0.0.1
+```
+
 Create .env:
 
 ```bash
