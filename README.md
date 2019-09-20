@@ -10,6 +10,7 @@ MySQL Server version >= 8.0.17
 ```bash
 git clone https://github.com/QuidObscurum/service_station_app.git
 cd service_station_app/servicestation
+sudo apt-get install python3-dev libmysqlclient-dev
 pip intstall -r requirements.txt
 cat app_dump.sql | mysql -u db_user -p db_name
 sudo nano /etc/mysql/my.cnf
