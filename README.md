@@ -60,7 +60,7 @@ GOOGLE_API_KEY=AIzaSyDivUdGRJ0LmZO0vyjiOCmM9younwcZWm8
 
 #### To see Customer cards available:
 
-```
+```bash
 python manage.py shell
 ```
 ```Python console
@@ -72,4 +72,10 @@ python manage.py shell
 Jane Dow: jane@example.com
 John Doe: jhon@example.com
 ...
+```
+
+#### To run the server:
+
+```bash
+python manage.py runserver
 ```
