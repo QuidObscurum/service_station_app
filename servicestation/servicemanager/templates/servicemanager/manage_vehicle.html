@@ -46,13 +46,13 @@
     </form>
 </div>
 
-{% if page_title == "Edit Vehicle" %}
+{% if can_delete %}
 <!-- The Modal -->
 <div id="confirmModal" class="my-modal">
 
   <!-- Modal content -->
     <div class="my-modal-content">
-        <span class="close">&times;</span><!--<span aria-hidden="true">×</span>-->
+        <span class="close">&times;</span>
         <div><b>Confirm deletion</b></div>
 
         <form action="{% url 'manager:delete_vehicle' vehicle.pk %}"
@@ -68,6 +68,9 @@
     </div>
 
 </div>
+
+{% load static %}<script type="text/javascript" src="{% static 'servicemanager/customer_detail.js' %}"></script>
+
 {% endif %}
 
 {% endblock %}

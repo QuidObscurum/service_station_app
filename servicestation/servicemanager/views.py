@@ -1,4 +1,3 @@
-# from django.shortcuts import render
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse
 from django.conf import settings
@@ -22,7 +21,6 @@ class CustomerCreateView(CreateView):
         context['card_title'] = "Create a customer card"
         context['page_title'] = "Create Customer"
         return context
-    success_url = 'manager:customer_card'
 
 
 class VehicleCreateView(CreateView):
@@ -34,25 +32,6 @@ class VehicleCreateView(CreateView):
         obj_id = self.kwargs.get("owner_id")
         return get_object_or_404(Customer, id=obj_id)
 
-    # def dispatch(self, request, *args, **kwargs):
-    #     print("***** dispatch *****", '\n\t', request, '\n\t', args, '\n\t', kwargs)
-    #     # self.get_context_data(owner_id=kwargs['owner_id'])
-    #     return super().post(request, *args, **kwargs)
-
-    # def post(self, request, *args, **kwargs):
-    #     print("*****POST*****", '\n', request.POST, '\n', args, '\n', kwargs)
-    #     customer_pk = self.kwargs.get('pk')
-    #     customer_obj = Customer.objects.all().filter(pk=customer_pk).first()
-    #     print(customer_obj.id)
-    #     form = self.get_form()
-    #     print(form)
-    #     # if form.is_valid():
-    #     #     return self.form_valid(form)
-    #     # else:
-    #     #     return self.form_invalid(form)
-    #
-    #     return super().post(request, *args, **kwargs)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         owner = self.get_object()
@@ -62,7 +41,6 @@ class VehicleCreateView(CreateView):
         return context
 
     def get_success_url(self):
-        # return reverse('manager:customer_card', pk=self.owner.pk)
         owner = self.get_object()
         return reverse('manager:customer_card', args=[owner.pk])
 
@@ -74,14 +52,12 @@ class OrderCreateView(CreateView):
 
     def get_object(self, queryset=None):
         obj_id = self.kwargs.get("vehicle_id")
-        print('\tOrderCreateView car id', obj_id)
         return get_object_or_404(Vehicle, id=obj_id)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         vehicle = self.get_object()
         context['vehicle'] = vehicle
-        print(context)
         return context
 
     def get_success_url(self):
@@ -96,7 +72,6 @@ class OrderUpdateView(UpdateView):
 
     def get_success_url(self):
         order_obj = self.get_object()
-        print(order_obj)
         return reverse('manager:orders_list', args=[order_obj.vehicle.id])
 
     def get_context_data(self, **kwargs):
@@ -141,12 +116,9 @@ class CustomerUpdateView(UpdateView):
         context = super().get_context_data(**kwargs)
         context['card_title'] = "Edit the customer card"
         context['page_title'] = "Edit Customer"
+        context['api_key'] = getattr(settings, 'GOOGLE_API_KEY')
 
         return context
-
-    # def get_object(self, queryset=None):
-    #     obj_id = self.kwargs.get("id")
-    #     return get_object_or_404(Customer, id=obj_id)
 
 
 class CustomerDetailView(DetailView):
@@ -167,7 +139,6 @@ class CustomerDetailView(DetailView):
 
         for obj in vehicle_qs:
             orders_in_progress = obj.order_set.all().filter(status__iexact="In Progress")
-            print(orders_in_progress)
             if orders_in_progress.exists():
                 vehicles_orders_in_progress += 1
         if vehicles_orders_in_progress == 0:
@@ -187,9 +158,6 @@ class CustomerListView(ListView):
         first_name = self.request.GET.get('first_name').strip()
         last_name = self.request.GET.get('last_name').strip()
 
-        # if first_name is None or last_name is None:
-        #     print("Please, provide the full name")  # FORM ERROR MSG
-        # else:
         qs = self.model.objects.filter(
             last_name__exact=last_name
         ).filter(
@@ -201,7 +169,6 @@ class CustomerListView(ListView):
         context = super().get_context_data(**kwargs)
         context['form'] = self.form_class
 
-        print("+++ ListView+++", self.get_queryset())
         qs = self.get_queryset()
         msg = ''
         customer_list = []
@@ -211,8 +178,6 @@ class CustomerListView(ListView):
             last_name = self.request.GET.get('last_name')
             if first_name is not None and last_name is not None:
                 msg = f"Didn't find {first_name} {last_name}"
-        # elif len(qs) == 1:
-        #     customer = qs.first()  # for return redirect("manager:customer_card", pk=found_customer.pk)
         else:
             msg = f"Found {len(qs)} customers:"
             for obj in qs:
@@ -252,7 +217,6 @@ class OrderListView(ListView):
 
         if not qs.exists():
             msg = f"There are no orders for this car yet."
-            print(msg)
         else:
             for obj in qs:
                 orders_list.append(obj)
@@ -284,18 +248,19 @@ class OrderDeleteView(DeleteView):
     model = Order
 
     def get_success_url(self):
-        print("TRIGGERED SUCCESS URL")
         order = self.get_object()
-        # 'orders_list/<int:vehicle_id>/', OrderListView.as_view(), name = 'orders_list'
         return reverse('manager:orders_list', args=[order.vehicle.id])
 
 
 class MainView(TemplateView):
     template_name = "servicemanager/search_customer.html"
     form_class = SearchForm
-    # model = Customer
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = self.form_class
         return context
+
+
+def redirect_to_valid_url(request):
+    return redirect("manager:main")

@@ -1,4 +1,5 @@
 import datetime
+import re
 
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
@@ -29,9 +30,30 @@ def validate_vehicle_year(value):
 
 
 def validate_amount(value):
-    current_year = datetime.date.today().year
-    if current_year < value < 1886:
+    if value < 0:
         raise ValidationError(
-            _('%(value)s is not a valid manufacture year.'),
+            _('Order amount %(value)s cannot be negative.'),
+            params={'value': value},
+        )
+    elif value > 10000:
+        raise ValidationError(
+            _('Order amount %(value)s cannot be more than 10,000 USD.'),
+            params={'value': value},
+        )
+
+
+def validate_name(value):
+    value = value.strip()
+    res = re.search("[0-9]", value)
+    if res is not None:
+        raise ValidationError(
+            _('%(value)s is not a valid name.'),
+            params={'value': value},
+        )
+    from string import punctuation
+    res = re.search(f"[{punctuation}]", value)
+    if res is not None:
+        raise ValidationError(
+            _('%(value)s is not a valid name.'),
             params={'value': value},
         )

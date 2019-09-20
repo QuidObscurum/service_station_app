@@ -8,18 +8,20 @@
                 Add an order{% endif %}</strong>
         </div>
         {{ form.non_field_errors }}
-        <div class="mul-fields">
-            <input type="hidden" name="vehicle" required value="{{ vehicle.id }}">
-            {{ form.date }}
-            {% if form.date.errors %}<div>{{ form.date.errors }}</div>{% endif %}
+        <div class="form-card">
+            <div class="mul-fields">
+                <input type="hidden" name="vehicle" required value="{{ vehicle.id }}">
+                {{ form.date }}
+                {% if form.date.errors %}<div>{{ form.date.errors }}</div>{% endif %}
 
-            {{ form.status }}
-            {% if form.status.errors %}<div>{{ form.status.errors }}</div>{% endif %}
-        </div>
-        <div class="mul-fields">
-            {{ form.amount }}
-            {% if form.amount.errors %}<div>{{ form.amount.errors }}</div>{% endif %}
+                {{ form.status }}
+                {% if form.status.errors %}<div>{{ form.status.errors }}</div>{% endif %}
+            </div>
+            <div class="mul-fields">
+                {{ form.amount }}
+                {% if form.amount.errors %}<div>{{ form.amount.errors }}</div>{% endif %}
 
+            </div>
         </div>
 
         <div class="single-field">

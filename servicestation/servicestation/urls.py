@@ -16,8 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from servicemanager.views import redirect_to_valid_url
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('manage/', include('servicemanager.urls'))
+    path('manage/', include('servicemanager.urls')),
+    path('accounts/', include('accounts.urls')),
+    path('', redirect_to_valid_url)
 ]

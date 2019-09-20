@@ -1,0 +1,28 @@
+{% extends "servicemanager/base.html" %}
+{% block title %}<title>Log in</title>{% endblock %}
+{% block content %}
+<div class="wrapper">
+    {% if view.request.user.is_authenticated %}
+    <div class="manage-customer-form">
+        <div class="form-title">
+            <strong>{{ view.request.user }}, You are already logged in</strong>
+        </div>
+    </div>
+
+    {% else %}
+    <form action="" method="post" class="manage-customer-form"> {% csrf_token %}
+        <div class="form-title">
+            <strong>Please, enter your credentials</strong>
+        </div>
+        <div class="form-card">
+        {{ form.as_p }}
+        </div>
+        <div class="single-field">
+            <input type="submit" value="Log in" class="my-btn my-btn-save">
+        </div>
+    </form>
+
+    {% endif %}
+</div>
+
+{% endblock %}

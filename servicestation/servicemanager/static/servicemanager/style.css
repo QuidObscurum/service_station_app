@@ -8,34 +8,42 @@ html { height: 100%; } /* necessary for percentage heights to work */
 
 body {
     min-height: 100%; /* allow body to expand with children */
-    display: flex; /* establish flex container */
-    /*justify-content: center;  center div vertically, in this case */
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: rgba(255,255,255,1)!important;
+}
+
+.page {
+    display: flex;
     align-items: center;  /* center div horizontally, in this case */
     flex-direction: column;
 }
 
 .wrapper {
-    /*position: absolute;
-    top: 50%;
-    transform: translateY(-50%);*/
     width: 100%;
     padding: 15px;
+}
+
+.nav-wrapper {
+    width: 100%;
+    padding:0;
+    background-color:#4EA4D9;
 }
 
 .manage-customer-form {
     max-width: 700px;
     margin: 0 auto;
     padding: 30px;
-    background: rgba(242,242,242, 0.7);
-    box-shadow: 0 0 10px rgba(242,242,242, 0.5);
+    background-color: #EBEFF2;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
 }
 
 .delete-customer-form {
-    background: rgba(242,242,242, 0.7);
-    margin-top: 20px; /*t r b l*/
+    background-color: #EBEFF2;
+    margin-top: 20px;
     border-radius: 5px;
     padding: 30px;
 }
@@ -94,6 +102,11 @@ body {
 }
 .info-3 {
     width: 40%;
+}
+
+ul {
+    list-style: none;
+    color: #dc3545;
 }
 
 .input {
@@ -167,7 +180,7 @@ input:focus:-ms-input-placeholder {
 
 .my-btn {
     margin: 0 2%;
-    margin-top: 30px;
+    /*margin-top: 30px;*/
     text-align: center;
     padding: 5px 15px;
     border: 0;
@@ -196,6 +209,13 @@ input:focus:-ms-input-placeholder {
     display: flex;
 }
 
+.my-btn-group-w {
+    width: 96%;
+    margin-left: 2%;
+    color: #f8f9fa;
+    display: flex;
+}
+
 .modal-btn-group {
     width: 96%;
     margin-left: 2%;
@@ -213,6 +233,7 @@ input:focus:-ms-input-placeholder {
 }
 
 .my-btn-register {
+    margin: 0 2% 0 0;
     color: #f8f9fa;
     background-color: #17a2b8;
     width: 23%;
@@ -279,7 +300,7 @@ button:disabled {
 
 .my-btn-save:hover,
 .modal-btn-cancel:hover {
-    background: #007bff;
+    background: #4EA4D9;
 }
 
 #autocomplete {
@@ -294,27 +315,16 @@ button:disabled {
     color: #7a7a7a;
 }
 
-/*.modal-dialog {
-    position: relative;
-    width: auto;
-    margin: 10px;
-}*/
-
-
 /* The Modal (background) */
 .my-modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  display: none;
+  position: fixed;
+  z-index: 1;
   padding-top: 100px; /* Location of the box */
   left: 0;
   top: 0;
-  /*right: 0;*/
-  /*bottom: 0;*/
-  /*outline: 0;*/ /*-webkit-overflow-scrolling: touch; !*/
-
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
+  width: 100%;
+  height: 100%;
   overflow: auto; /* Enable scroll if needed != hidden*/
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
@@ -328,18 +338,6 @@ button:disabled {
   border: 1px solid #888;
   width: 50%;
 }
-
-/*.modal-content {
-    position: relative;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #999;
-    border: 1px solid rgba(0,0,0,.2);
-    border-radius: 6px;
-    -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
-    box-shadow: 0 3px 9px rgba(0,0,0,.5);
-    outline: 0;
-}*/
 
 /* The Close Button */
 .close {
@@ -358,6 +356,11 @@ button:disabled {
 
 
 @media only screen and (max-width: 600px) {
+
+    .sandwich{
+        display: block;
+    }
+
     .mul-fields, .form-header {
         flex-direction: column;
     }
@@ -392,6 +395,10 @@ button:disabled {
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
+    .sandwich{
+        display: block;
+    }
+
     a.my-btn-disabled:not([href]):not([tabindex]),
     button:disabled,
     .my-btn-edit,
@@ -413,6 +420,17 @@ button:disabled {
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
+    .nav-ul {
+        display: flex;
+        justify-content: space-around;
+        width: 40%;
+        margin-bottom: 0;
+    }
+
+    .sandwich{
+        display: none;
+    }
+
     .modal-btn-cancel,
     .modal-btn-delete,
     .my-btn-save,

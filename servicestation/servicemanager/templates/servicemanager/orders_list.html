@@ -63,7 +63,7 @@
 
   <!-- Modal content -->
     <div class="my-modal-content">
-        <span id="close{{obj.pk}}" class="close">&times;</span><!--<span aria-hidden="true">×</span>-->
+        <span id="close{{obj.pk}}" class="close">&times;</span>
         <div><b>Confirm deletion</b></div>
 
         <form action="{% url 'manager:delete_order' obj.pk %}"
@@ -80,38 +80,5 @@
 
 </div>
 {% endfor %}
-
-<script>
-
-var triggers = document.getElementsByClassName("trigger");
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-for (var i = 0; i < triggers.length; i++) {
-    var t = triggers[i];
-    t.onclick = function() {
-        var obj_pk = t.id;
-        var close = document.getElementById("close"+obj_pk);
-        var cancel = document.getElementById("cancel"+obj_pk);
-        var modal_id = "confirmModal" + obj_pk;
-        modal = document.getElementById(modal_id);
-        modal.style.display = "block";
-
-        close.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        cancel.onclick = function() {
-            modal.style.display = "none";
-        }
-    }
-}
-
-
-
-</script>
-
-
+{% load static %}<script type="text/javascript" src="{% static 'servicemanager/orders_list.js' %}"></script>
 {% endblock %}

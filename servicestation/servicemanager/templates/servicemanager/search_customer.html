@@ -3,44 +3,42 @@
 {% block content %}
 
 <div class="wrapper">
-    <div style="max-width: 700px; margin: 0 auto;">My Service Station</div>
-</div>
+    <div class="manage-customer-form">
+        <form action="{% url 'manager:search_customer' %}" method="get">
+            <div class="form-title">
+                <strong>{% if card_title %}{{ card_title }}{% else %}Search customers{% endif %}</strong>
+            </div>
+            <div class="form-card">
+                <div class="mul-fields">
+                    {{ form.first_name }}
+                    {% if form.first_name.errors %}<div>{{ form.first_name.errors }}</div>{% endif %}
 
-<div class="wrapper">
-    <form action="{% url 'manager:search_customer' %}" method="get" class="manage-customer-form">
-        <div class="form-title">
-            <strong>{% if card_title %}{{ card_title }}{% else %}Search customers{% endif %}</strong>
+                    {{ form.last_name }}
+                    {% if form.last_name.errors %}<div>{{ form.last_name.errors }}</div>{% endif %}
+                </div>
+            </div>
+            <div class="my-btn-group-w">
+                <input type="submit" value="Search" class="my-btn my-btn-save">
+                <a href="{% url 'manager:create_customer' %}" class="my-btn my-btn-register">Register</a>
+            </div>
+        </form>
+        <div style="padding: 30px;">
+            {% if msg %}
+
+            <div class="form-header-title">
+                <strong>{{ msg }}</strong>
+            </div>{% endif %}
+
+
+            {% for obj in customer_list %}
+            <div class="form-header-title">
+                <a href="{% url 'manager:customer_card' obj.pk %}">
+                    {{ obj.first_name }} {{ obj.last_name }} {{ obj.email }}
+                </a>
+            </div>
+            {% endfor %}
         </div>
-        <div class="mul-fields">
-            {{ form.first_name }}
-            {% if form.first_name.errors %}<div>{{ form.first_name.errors }}</div>{% endif %}
-
-            {{ form.last_name }}
-            {% if form.last_name.errors %}<div>{{ form.last_name.errors }}</div>{% endif %}
-        </div>
-        <div class="btn-group">
-            <input type="submit" value="Search" class="my-btn my-btn-save">
-            <a href="{% url 'manager:create_customer' %}" class="my-btn my-btn-register">Register</a>
-        </div>
-    </form>
-
-    {% if msg %}<div class="manage-customer-form">
-
-        <div class="form-header-title">
-            <strong>{{ msg }}</strong>
-        </div>
-
-
-        {% for obj in customer_list %}
-        <div class="form-header-title"><!-- class="mul-fields"-->
-            <a href="{% url 'manager:customer_card' obj.pk %}">
-                {{ obj.first_name }} {{ obj.last_name }} {{ obj.email }}
-            </a>
-        </div>
-        {% endfor %}
-
-
-    </div>{% endif %}
+    </div>
 
 
 </div>

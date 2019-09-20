@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.utils import ErrorList
 from .models import Customer, Vehicle, Order
 
 
@@ -43,7 +44,7 @@ class CustomerForm(forms.ModelForm):
                 'type': "date", "class": "input",
             }),
             'phone': forms.TextInput(attrs={
-                'placeholder': "Phone", "class": "input",
+                'placeholder': "Phone", "class": "input", "type": "tel",
             }),
             'email': forms.TextInput(attrs={
                 'placeholder': "E-mail", "class": "input",
@@ -76,9 +77,6 @@ class VehicleForm(forms.ModelForm):
         model = Vehicle
         fields = ['owner', 'make', 'model', 'year', 'vin']
         widgets = {
-            # 'owner': forms.HiddenInput(attrs={
-            #     "class": "input",
-            # }),
             'make': forms.TextInput(attrs={
                 'placeholder': "Make", "class": "input",
             }),
@@ -112,3 +110,12 @@ class OrderForm(forms.ModelForm):
                 'placeholder': "Amount", "class": "input", "type": "number", "step": "0.01",
             }),
         }
+
+
+class DivErrorList(ErrorList):
+    def __str__(self):
+        return self.as_divs()
+
+    def as_divs(self):
+        if not self: return ''
+        return '<div class="errorlist">%s</div>' % ''.join(['<div class="error">%s</div>' % e for e in self])
